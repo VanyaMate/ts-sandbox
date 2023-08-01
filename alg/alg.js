@@ -1,7 +1,9 @@
+const { createWithRandomNumbers } = require('../mthds/array');
+
 /**
  *  Данные
  */
-const data = [ 5, 2, 1, 8, 7, 4, 0, 11, 3, 9, 0, 34, 9, 1, -3, -4, 23, 1001, -1002, 0, 0, 3, 4, 5, -2 ];
+const data = createWithRandomNumbers(20000000); // 20.000.000
 
 
 /**
@@ -104,8 +106,24 @@ const quickSort = function (array) {
     return [ ...quickSort(less), pivot, ...quickSort(greater) ];
 }
 
-console.log(linearSearch(data, 3));
-console.log(selectionSort(data));
-console.log(bubbleSort(data));
-console.log(quickSort([ ...data ]));
-console.log(binarySearch(selectionSort(data), 3));
+
+console.time('search-linear');
+linearSearch(data, 143256213);
+console.timeEnd('search-linear');
+
+console.time('sort-selection')
+// const sorted_selection = selectionSort([ ...data ]);
+console.timeEnd('sort-selection')
+
+console.time('sort-bubble')
+// const sorted_bubble = bubbleSort([ ...data ]);
+console.timeEnd('sort-bubble')
+
+console.time('sort-quick')
+const sorted_quick = quickSort([ ...data ]);
+console.timeEnd('sort-quick')
+
+
+console.time('search-binary');
+binarySearch(sorted_quick, 143256213);
+console.timeEnd('search-binary');
