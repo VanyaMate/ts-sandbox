@@ -3,7 +3,7 @@ const { createWithRandomNumbers } = require('../mthds/array');
 /**
  *  Данные
  */
-const data = createWithRandomNumbers(20000000); // 20.000.000
+const data = createWithRandomNumbers(2000000); // 20.000.000
 
 
 /**
@@ -28,7 +28,7 @@ const linearSearch = function (array, searchItem) {
  */
 const binarySearch = function (array, searchItem) {
     let start = 0;
-    let end   = array.length;
+    let end   = array.length - 1;
     let middle;
 
     while (start <= end) {
@@ -44,6 +44,42 @@ const binarySearch = function (array, searchItem) {
     }
 
     return null;
+}
+
+const binaryByLastIndexSearch = function (array, searchItem) {
+    let start = 0;
+    let end   = array.length - 1;
+
+    while (start <= end) {
+        const middle = start + end;
+        if (array[middle] === searchItem) {
+            return middle;
+        }
+        if (searchItem < array[middle]) {
+            end = middle - 1;
+        } else {
+            start = middle + 1;
+        }
+    }
+}
+
+const binaryByLastIndexSearchWithPreInitMiddle = function (array, searchItem) {
+    let start = 0;
+    let end   = array.length - 1;
+    let middle;
+
+    while (start <= end) {
+        middle = start + end;
+
+        if (array[middle] === searchItem) {
+            return middle;
+        }
+        if (searchItem < array[middle]) {
+            end = middle - 1;
+        } else {
+            start = middle + 1;
+        }
+    }
 }
 
 /**
@@ -125,5 +161,20 @@ console.timeEnd('sort-quick')
 
 
 console.time('search-binary');
-binarySearch(sorted_quick, 143256213);
+for (let i = 0; i < 1000; i++) {
+    binarySearch([ ...sorted_quick ], 143256213);
+}
 console.timeEnd('search-binary');
+
+console.time('search-binary-last');
+for (let i = 0; i < 1000; i++) {
+    binaryByLastIndexSearch([ ...sorted_quick ], 143256213);
+}
+console.timeEnd('search-binary-last');
+
+console.time('search-binary-last-pre-init');
+for (let i = 0; i < 1000; i++) {
+    binaryByLastIndexSearchWithPreInitMiddle([ ...sorted_quick ], 143256213);
+}
+console.timeEnd('search-binary-last-pre-init');
+
