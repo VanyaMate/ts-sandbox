@@ -42,6 +42,7 @@ class NewMailNotification extends NotificationType {
 }
 
 const mailNotification: MailNotification = new MailNotification(new MailNotificationSender());
+// Тайпскрипт классный кста
 const newMailNotification: MailNotification = new NewMailNotification(new MailNotificationSender());
 const smsNotification: SmsNotification   = new SmsNotification(new SmsNotificationSender());
 
